@@ -1,25 +1,59 @@
-function Drawer(props) {
+import { useEffect } from 'react';
+
+function Drawer({ onClose, onDeleteItem, items = [] }) {
+	// закрываем корзину по нажатию Escape
+	useEffect(() => {
+		const handleEsc = event => {
+			if (event.keyCode === 27) {
+				onClose();
+			}
+		};
+		window.addEventListener('keydown', handleEsc);
+
+		return () => {
+			window.removeEventListener('keydown', handleEsc);
+		};
+	});
+
+	const handleDeleteItem = e => {
+		console.log(e.target.id);
+		onDeleteItem(e.target.id);
+	};
+
 	return (
-		<div style={{ display: props.display }} className='overlay'>
+		<div className='overlay'>
 			<div className='drawer'>
 				<h2>
 					Корзина
-					<img className='removeBtn' src='img/close.svg' alt='close' />
+					<img
+						className='removeBtn'
+						onClick={onClose}
+						src='img/close.svg'
+						alt='close'
+					/>
 				</h2>
 				<div className='cart'>
-					<div className='cartItem'>
-						<img
-							width={70}
-							height={70}
-							src='img/sneakers/2.jpg'
-							alt='sneakers'
-						/>
-						<div>
-							<p>Мужские Кроссовки Nike Air Max 270</p>
-							<span>12 999 руб.</span>
+					{items.map(item => (
+						<div className='cartItem' key={item.id}>
+							<img
+								width={70}
+								height={70}
+								src={`img/sneakers/${item.id}.jpg`}
+								alt='sneakers'
+							/>
+							<div>
+								<p>{item.model}</p>
+								<span>{item.price} руб.</span>
+							</div>
+							<img
+								id={item.id}
+								className='removeBtn'
+								src='img/close.svg'
+								onClick={handleDeleteItem}
+								alt='close'
+							/>
 						</div>
-						<img className='removeBtn' src='img/close.svg' alt='close' />
-					</div>
+					))}
 				</div>
 				{/* end of cart */}
 				<div className='cartInfo'>
