@@ -12,6 +12,10 @@ body {
 	background-color: #e7f6ff;
 }
 
+a {
+	text-decoration: none;
+}
+
 .wrapper {
 	background: #ffffff;
 	box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.04);
@@ -99,18 +103,24 @@ header {
 			display: flex;
 			align-items: center;
 			justify-content: space-around;
-			width: 250px;
+			width: 270px;
 			height: 45px;
 			border: 1px solid #f3f3f3;
 			border-radius: 10px;
 
 			input {
 				border: none;
+				outline: none;
 				font-style: normal;
 				font-weight: 400;
 				font-size: 14px;
 				line-height: 17px;
-				color: #c4c4c4;
+				color: #6e6e6e;
+			}
+
+			img {
+				width: 20px;
+				height: 20px;
 			}
 		}
 	}

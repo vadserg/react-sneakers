@@ -1,8 +1,9 @@
-import { useEffect } from 'react';
+import React from 'react';
+// import axios from 'axios';
 
-function Drawer({ onClose, onDeleteItem, items = [] }) {
+function Drawer({ onClose, onRemove, cartItems = [] }) {
 	// закрываем корзину по нажатию Escape
-	useEffect(() => {
+	React.useEffect(() => {
 		const handleEsc = event => {
 			if (event.keyCode === 27) {
 				onClose();
@@ -14,11 +15,6 @@ function Drawer({ onClose, onDeleteItem, items = [] }) {
 			window.removeEventListener('keydown', handleEsc);
 		};
 	});
-
-	const handleDeleteItem = e => {
-		console.log(e.target.id);
-		onDeleteItem(e.target.id);
-	};
 
 	return (
 		<div className='overlay'>
@@ -33,12 +29,12 @@ function Drawer({ onClose, onDeleteItem, items = [] }) {
 					/>
 				</h2>
 				<div className='cart'>
-					{items.map(item => (
-						<div className='cartItem' key={item.id}>
+					{cartItems.map(item => (
+						<div id={item.id} className='cartItem' key={item.code}>
 							<img
 								width={70}
 								height={70}
-								src={`img/sneakers/${item.id}.jpg`}
+								src={`img/sneakers/${item.code}.jpg`}
 								alt='sneakers'
 							/>
 							<div>
@@ -46,10 +42,10 @@ function Drawer({ onClose, onDeleteItem, items = [] }) {
 								<span>{item.price} руб.</span>
 							</div>
 							<img
-								id={item.id}
+								id={item.code}
 								className='removeBtn'
 								src='img/close.svg'
-								onClick={handleDeleteItem}
+								onClick={() => onRemove(item)}
 								alt='close'
 							/>
 						</div>
